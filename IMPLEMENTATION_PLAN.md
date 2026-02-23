@@ -2,11 +2,13 @@
 
 **Current state**: Workspace scaffold complete. Cargo workspace with full directory structure and crate stubs exists. Governance scaffolding complete. Ready to begin Wave 2 (P0.5-03 design tokens + P0.5-05 primitives).
 
-**Active phase**: Phase 0.5 -- Wave 2. P0.5-01 (workspace scaffold) DONE. P0.5-02 (governance scaffolding) DONE. Next: P0.5-03 (design tokens) + P0.5-05 (primitives) in parallel.
-**Phase 0.5 gate status**: NOT MET -- Wave 1 complete, Wave 2 not started.
+**Active phase**: Phase 0.5 -- Wave 3+4. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-05 DONE. Next: P0.5-04 (theme engine, needs 03) + P0.5-06 (contracts, needs 03+05) in parallel.
+**Phase 0.5 gate status**: NOT MET -- Wave 2 complete, Wave 3/4 not started.
 **Last updated**: 2026-02-22
 **P0.5-01 completed**: 2026-02-22
 **P0.5-02 completed**: 2026-02-22
+**P0.5-03 completed**: 2026-02-22
+**P0.5-05 completed**: 2026-02-22
 **Plan validated**: 2026-02-22 -- All specs read, codebase confirmed greenfield, dependency graph verified correct.
 **Re-validated**: 2026-02-22 -- All 17 specs re-read and cross-referenced. 10 gaps identified and addressed below.
 **Re-validated**: 2026-02-22 -- Deep spec analysis with parallel subagents. 8 additional forward-planning gaps identified (see Reconciliation §2).
@@ -109,7 +111,7 @@ All items must complete and gate criteria must be met before any Phase 1 work be
 
 ### P0.5-03: Design tokens -- freeze Zed One Dark / One Light
 
-- **Status**: NOT STARTED
+- **Status**: COMPLETE
 - **Spec**: `specs/design-tokens.md`
 - **What**: Extract and freeze design token values from Zed One Dark and One Light themes into Rust types. These tokens are the single source of truth for all component colors, surfaces, and states.
 - **Sub-tasks**:
@@ -181,7 +183,7 @@ All items must complete and gate criteria must be met before any Phase 1 work be
 
 ### P0.5-05: Primitives -- focus, keyboard, popover, state management
 
-- **Status**: NOT STARTED
+- **Status**: COMPLETE
 - **Spec**: `specs/phase-0.5/primitives.md`
 - **What**: Build unstyled behavior primitives that encapsulate shared focus, keyboard, popover, state, and pointer logic. These are the behavioral building blocks consumed by styled components.
 - **Sub-tasks**:
