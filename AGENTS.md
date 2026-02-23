@@ -1,9 +1,12 @@
 ## Build & Run
 
 - Language: Rust (edition 2024)
-- UI Framework: GPUI (from Zed)
-- Build: `cargo build`
-- Run: `cargo run`
+- UI Framework: GPUI (from Zed, pinned to rev `d08d98f`)
+- Build: `cargo build` (default-members: studio app only), `cargo build --workspace` (all crates)
+- Run: `cargo run` (launches studio workbench app)
+- GPUI app bootstrap: `gpui_platform::application().run()` (NOT `Application::new()` which doesn't exist at this rev)
+- Metal shaders: `runtime_shaders` feature compiles shaders at runtime (no full Xcode needed)
+- If `core-text` version conflict occurs: `cargo update core-text@21.1.0 --precise 21.0.0`
 
 ## Validation
 
@@ -24,5 +27,12 @@ See `.refs/zed_gpui_refs/` for reference codebases and examples:
 - **zed-main** — Zed editor source; flagship GPUI application and reference implementation
 
 ## Operational Notes
+
+### GPUI API at Pinned Rev (d08d98f)
+
+- `Render` trait: `fn render(&mut self, _window: &mut Window, _cx: &mut Context<Self>) -> impl IntoElement`
+- Window open: `cx.open_window(opts, |_window, cx| cx.new(|_cx| MyView))`
+- Init pattern: `pub fn init(cx: &mut gpui::App)` per crate
+- Provenance check: `scripts/check-provenance.sh`
 
 ### Codebase Patterns

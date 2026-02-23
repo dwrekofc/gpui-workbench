@@ -1,7 +1,64 @@
-[package]
-name = "gpui-workbench"
-version = "0.0.0"
+[workspace]
+members = [
+    "apps/studio",
+    "apps/cli",
+    "crates/components",
+    "crates/primitives",
+    "crates/registry",
+    "crates/theme",
+    "crates/story",
+    "crates/assets",
+]
+default-members = ["apps/studio"]
+resolver = "2"
+
+[workspace.package]
+publish = false
 edition = "2024"
 
-[dependencies]
-gpui = { git = "https://github.com/zed-industries/zed" }
+[workspace.dependencies]
+# Internal crates
+components = { path = "crates/components" }
+primitives = { path = "crates/primitives" }
+registry = { path = "crates/registry" }
+theme = { path = "crates/theme" }
+story = { path = "crates/story" }
+assets = { path = "crates/assets" }
+
+# GPUI from Zed git source, pinned to gpui-component's known-working revision
+gpui = { git = "https://github.com/zed-industries/zed", rev = "d08d98f6c1c1aefb342de072d9beac25eaf6130f" }
+gpui_macros = { git = "https://github.com/zed-industries/zed", rev = "d08d98f6c1c1aefb342de072d9beac25eaf6130f" }
+gpui_platform = { git = "https://github.com/zed-industries/zed", rev = "d08d98f6c1c1aefb342de072d9beac25eaf6130f", features = ["font-kit", "runtime_shaders"] }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+
+# CLI
+clap = { version = "4", features = ["derive"] }
+
+# Utilities
+smallvec = "1"
+anyhow = "1"
+log = "0.4"
+
+
+[workspace.lints.clippy]
+dbg_macro = "deny"
+todo = "deny"
+style = { level = "allow", priority = -1 }
+
+[profile.dev]
+codegen-units = 16
+debug = "limited"
+split-debuginfo = "unpacked"
+
+# Compile heavy crates at opt-level 3 even in dev builds.
+# Without this, GPUI debug builds are unusably slow.
+[profile.dev.package]
+gpui = { opt-level = 3 }
+resvg = { opt-level = 3 }
+rustybuzz = { opt-level = 3 }
+taffy = { opt-level = 3 }
+smol = { opt-level = 3 }
