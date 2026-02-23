@@ -9,9 +9,7 @@ pub mod plan;
 
 use std::collections::HashMap;
 
-use components::{
-    ComponentContract, ComponentState, Disposition, PropDef, TokenRef,
-};
+use components::{ComponentContract, ComponentState, Disposition, PropDef, TokenRef};
 use serde::{Deserialize, Serialize};
 
 // ---------------------------------------------------------------------------
@@ -187,14 +185,11 @@ pub fn generate_registry() -> RegistryIndex {
 ///
 /// Returns errors if any contract fails validation. This ensures the registry
 /// only indexes well-formed components.
-pub fn generate_registry_validated() -> Result<RegistryIndex, Vec<(String, Vec<components::ValidationError>)>> {
+pub fn generate_registry_validated()
+-> Result<RegistryIndex, Vec<(String, Vec<components::ValidationError>)>> {
     use components::{Dialog, Select, Tabs};
 
-    let contracts = vec![
-        Dialog::contract(),
-        Select::contract(),
-        Tabs::contract(),
-    ];
+    let contracts = vec![Dialog::contract(), Select::contract(), Tabs::contract()];
 
     let mut validation_errors = Vec::new();
     for contract in &contracts {
@@ -399,7 +394,11 @@ mod tests {
 
         for entry in index.list() {
             assert!(!entry.name.is_empty(), "{} has empty name", entry.name);
-            assert!(!entry.version.is_empty(), "{} has empty version", entry.name);
+            assert!(
+                !entry.version.is_empty(),
+                "{} has empty version",
+                entry.name
+            );
             assert!(!entry.props.is_empty(), "{} has no props", entry.name);
             assert!(!entry.states.is_empty(), "{} has no states", entry.name);
             assert!(

@@ -507,7 +507,10 @@ mod tests {
         let json1 = plan1.to_json().unwrap();
         let json2 = plan2.to_json().unwrap();
 
-        assert_eq!(json1, json2, "Identical inputs must produce identical plans (NFR-001)");
+        assert_eq!(
+            json1, json2,
+            "Identical inputs must produce identical plans (NFR-001)"
+        );
     }
 
     #[test]
@@ -541,7 +544,10 @@ mod tests {
 
         let plan = generate_plan(entry, &layout, &existing);
 
-        assert!(plan.has_conflicts(), "Should detect conflict with existing file");
+        assert!(
+            plan.has_conflicts(),
+            "Should detect conflict with existing file"
+        );
         assert_eq!(plan.conflicts.len(), 1);
         assert!(plan.conflicts[0].reason.contains("already exists"));
     }
@@ -572,7 +578,10 @@ mod tests {
         assert_eq!(restored.component_version, plan.component_version);
         assert_eq!(restored.mutations.len(), plan.mutations.len());
         assert_eq!(restored.conflicts.len(), plan.conflicts.len());
-        assert_eq!(restored.provenance_actions.len(), plan.provenance_actions.len());
+        assert_eq!(
+            restored.provenance_actions.len(),
+            plan.provenance_actions.len()
+        );
         assert_eq!(restored.file_checksums.len(), plan.file_checksums.len());
         assert_eq!(restored.target_layout, plan.target_layout);
     }
@@ -722,15 +731,30 @@ mod tests {
     #[test]
     fn operation_json_names() {
         assert_eq!(serde_json::to_string(&Operation::Add).unwrap(), "\"add\"");
-        assert_eq!(serde_json::to_string(&Operation::Update).unwrap(), "\"update\"");
-        assert_eq!(serde_json::to_string(&Operation::Remove).unwrap(), "\"remove\"");
+        assert_eq!(
+            serde_json::to_string(&Operation::Update).unwrap(),
+            "\"update\""
+        );
+        assert_eq!(
+            serde_json::to_string(&Operation::Remove).unwrap(),
+            "\"remove\""
+        );
     }
 
     #[test]
     fn file_action_json_names() {
-        assert_eq!(serde_json::to_string(&FileAction::Create).unwrap(), "\"create\"");
-        assert_eq!(serde_json::to_string(&FileAction::Modify).unwrap(), "\"modify\"");
-        assert_eq!(serde_json::to_string(&FileAction::Delete).unwrap(), "\"delete\"");
+        assert_eq!(
+            serde_json::to_string(&FileAction::Create).unwrap(),
+            "\"create\""
+        );
+        assert_eq!(
+            serde_json::to_string(&FileAction::Modify).unwrap(),
+            "\"modify\""
+        );
+        assert_eq!(
+            serde_json::to_string(&FileAction::Delete).unwrap(),
+            "\"delete\""
+        );
     }
 
     #[test]

@@ -4424,7 +4424,10 @@ dependencies = [
  "components",
  "gpui",
  "gpui_platform",
+ "log",
  "primitives",
+ "registry",
+ "serde_json",
  "story",
  "theme",
 ]

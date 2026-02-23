@@ -2,8 +2,9 @@
 
 **Current state**: Workspace scaffold complete. Cargo workspace with full directory structure and crate stubs exists. Governance scaffolding complete. Ready to begin Wave 2 (P0.5-03 design tokens + P0.5-05 primitives).
 
-**Active phase**: Phase 0.5 -- Wave 9. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-04 DONE. P0.5-05 DONE. P0.5-06 DONE. P0.5-07 DONE. P0.5-08 DONE. P0.5-09 DONE. P0.5-10 DONE. P0.5-11 DONE. Next: P0.5-12 (Workbench app) -- final item before Phase 0.5 gate.
-**Phase 0.5 gate status**: NOT MET -- Waves 1-9 complete (P0.5-11 done). Only P0.5-12 (Workbench app) remains.
+**Active phase**: Phase 0.5 -- COMPLETE. All 12 items done (P0.5-01 through P0.5-12). Phase 0.5 gate evaluation needed.
+**Phase 0.5 gate status**: READY FOR EVALUATION -- All 12 items complete.
+**P0.5-12 completed**: 2026-02-22
 **P0.5-11 completed**: 2026-02-22
 **P0.5-10 completed**: 2026-02-22
 **Last updated**: 2026-02-22
@@ -465,7 +466,7 @@ All items must complete and gate criteria must be met before any Phase 1 work be
 
 ### P0.5-12: Workbench app -- launch and display stories
 
-- **Status**: NOT STARTED
+- **Status**: COMPLETE
 - **Spec**: `specs/phase-0.5/workbench-app.md`
 - **What**: Build the desktop GPUI application that serves as component explorer, story renderer, and theme editor.
 - **Sub-tasks**:
@@ -487,6 +488,10 @@ All items must complete and gate criteria must be met before any Phase 1 work be
   - `.refs/zed_gpui_refs/create-gpui-app-main/templates/default/src/main.rs` -- GPUI app bootstrap template
   - `.refs/zed_gpui_refs/create-gpui-app-main/README.md` -- create-gpui-app scaffolding
 - **Dependencies**: P0.5-04 (theme engine), P0.5-07 (POC components), P0.5-08 (story framework). NOTE: If the component explorer sidebar is registry-driven (not hardcoded), P0.5-09 (registry) is also a dependency. For POC, a hardcoded component list is acceptable; registry integration can be wired when P0.5-09 completes.
+- **Implementation discoveries** (captured 2026-02-22 during P0.5-12 execution):
+  - **Borrow conflict with StoryRegistry**: Cannot hold `cx.global::<StoryRegistry>()` borrow while calling `render_story(window, cx)` because `render_story` needs `&mut App`. Solution: render stories via concrete type dispatch (`render_story_by_index`) that instantiates story structs directly (zero-sized, no allocation).
+  - **`Div` vs `Stateful<Div>`**: Adding `.id()` to a `Div` produces `Stateful<Div>`, not `Div`. Methods returning toolbar-like elements should use `impl IntoElement` return type.
+  - **StudioApp uses `Render` trait**: Persistent stateful view (not `RenderOnce`) because it tracks selected story index, panel visibility, and token editor state across renders.
 - **Gate evidence**: App launches on macOS, displays all 3 POC components in story form, theme switch works, token editing propagates.
 
 ---

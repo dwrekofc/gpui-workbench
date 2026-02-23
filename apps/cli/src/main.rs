@@ -5,7 +5,7 @@ use clap::{Parser, Subcommand};
 use serde::{Deserialize, Serialize};
 
 use registry::plan::{
-    ApplyFailureReport, DefaultLayout, FileMutation, FileAction, MutationStrategy, PlanContract,
+    ApplyFailureReport, DefaultLayout, FileAction, FileMutation, MutationStrategy, PlanContract,
     generate_plan,
 };
 
@@ -59,7 +59,11 @@ impl<T: Serialize> CliOutput<T> {
 
 /// GPUI component toolkit CLI
 #[derive(Parser)]
-#[command(name = "gpui", version, about = "GPUI component toolkit - install, plan, and manage UI components")]
+#[command(
+    name = "gpui",
+    version,
+    about = "GPUI component toolkit - install, plan, and manage UI components"
+)]
 struct Cli {
     #[command(subcommand)]
     command: Commands,
@@ -201,12 +205,14 @@ fn cmd_apply(plan_file: &Path, target_dir: &Path) -> Result<()> {
         .with_context(|| format!("Failed to read plan file: {}", plan_file.display()))?;
 
     // Parse the plan -- it may be wrapped in a CliOutput envelope or be a raw PlanContract
-    let plan: PlanContract = if let Ok(envelope) = serde_json::from_str::<CliOutput<PlanContract>>(&json) {
-        envelope.data
-    } else {
-        PlanContract::from_json(&json)
-            .context("Failed to parse plan JSON. Expected PlanContract or CliOutput<PlanContract>")?
-    };
+    let plan: PlanContract =
+        if let Ok(envelope) = serde_json::from_str::<CliOutput<PlanContract>>(&json) {
+            envelope.data
+        } else {
+            PlanContract::from_json(&json).context(
+                "Failed to parse plan JSON. Expected PlanContract or CliOutput<PlanContract>",
+            )?
+        };
 
     match apply_plan(&plan, target_dir) {
         Ok(()) => {
@@ -277,9 +283,8 @@ fn apply_mutation(mutation: &FileMutation) -> Result<()> {
         FileAction::Create => {
             // Ensure parent directory exists
             if let Some(parent) = mutation.file_path.parent() {
-                std::fs::create_dir_all(parent).with_context(|| {
-                    format!("Failed to create directory: {}", parent.display())
-                })?;
+                std::fs::create_dir_all(parent)
+                    .with_context(|| format!("Failed to create directory: {}", parent.display()))?;
             }
             std::fs::write(&mutation.file_path, &mutation.content).with_context(|| {
                 format!("Failed to write file: {}", mutation.file_path.display())
@@ -413,11 +418,7 @@ mod tests {
 
     fn temp_dir() -> PathBuf {
         let id = TEST_COUNTER.fetch_add(1, Ordering::SeqCst);
-        let dir = std::env::temp_dir().join(format!(
-            "gpui-cli-test-{}-{}",
-            std::process::id(),
-            id
-        ));
+        let dir = std::env::temp_dir().join(format!("gpui-cli-test-{}-{}", std::process::id(), id));
         let _ = fs::remove_dir_all(&dir);
         fs::create_dir_all(&dir).unwrap();
         dir
@@ -561,11 +562,7 @@ mod tests {
         let provenance_files: Vec<_> = fs::read_dir(&component_dir)
             .unwrap()
             .flatten()
-            .filter(|e| {
-                e.path()
-                    .to_string_lossy()
-                    .contains("provenance.json")
-            })
+            .filter(|e| e.path().to_string_lossy().contains("provenance.json"))
             .collect();
 
         assert!(
@@ -652,7 +649,10 @@ mod tests {
         let json1 = plan1.to_json().unwrap();
         let json2 = plan2.to_json().unwrap();
 
-        assert_eq!(json1, json2, "Identical inputs must produce identical plans");
+        assert_eq!(
+            json1, json2,
+            "Identical inputs must produce identical plans"
+        );
 
         cleanup(&dir);
     }
