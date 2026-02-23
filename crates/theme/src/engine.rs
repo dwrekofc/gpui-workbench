@@ -141,8 +141,7 @@ impl Theme {
 
     /// Export the active theme to a pretty-printed TOML string.
     pub fn export_toml(&self) -> Result<String, ThemeError> {
-        toml::to_string_pretty(&self.tokens)
-            .map_err(|e| ThemeError::Export(format!("TOML: {e}")))
+        toml::to_string_pretty(&self.tokens).map_err(|e| ThemeError::Export(format!("TOML: {e}")))
     }
 }
 
@@ -279,11 +278,7 @@ impl std::error::Error for ThemeError {}
 /// Supported paths correspond to the internal token paths from
 /// [`tokens::TOKEN_MAPPING`], e.g. `"border.default"`, `"text.muted"`,
 /// `"status.error.foreground"`.
-fn set_token_by_path(
-    tokens: &mut ThemeTokens,
-    path: &str,
-    color: Hsla,
-) -> Result<(), ThemeError> {
+fn set_token_by_path(tokens: &mut ThemeTokens, path: &str, color: Hsla) -> Result<(), ThemeError> {
     match path {
         // Border
         "border.default" => tokens.border.default = color,

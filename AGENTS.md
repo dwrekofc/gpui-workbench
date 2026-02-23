@@ -36,3 +36,8 @@ See `.refs/zed_gpui_refs/` for reference codebases and examples:
 - Provenance check: `scripts/check-provenance.sh`
 
 ### Codebase Patterns
+
+- `FluentBuilder` import: Components using `.when()` must `use gpui::prelude::FluentBuilder`
+- Flex helpers: No `v_flex()`/`h_flex()` in GPUI — use `div().flex().flex_col()` / `div().flex().flex_row()`
+- Test stack overflow: GPUI `IntoElement` derives cause stack overflow in test compilation. Use integration tests (`tests/`) for crates with `#[derive(IntoElement)]`. Set `#![recursion_limit = "2048"]`.
+- Component pattern: POC components use `#[derive(IntoElement)]` + `impl RenderOnce` (stateless, consumed on render)

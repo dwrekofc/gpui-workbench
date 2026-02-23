@@ -400,11 +400,7 @@ impl ContractBuilder {
     }
 
     /// Add a token dependency.
-    pub fn token_dep(
-        mut self,
-        path: impl Into<String>,
-        usage: impl Into<String>,
-    ) -> Self {
+    pub fn token_dep(mut self, path: impl Into<String>, usage: impl Into<String>) -> Self {
         self.token_dependencies.push(TokenRef {
             path: path.into(),
             usage: usage.into(),
@@ -523,7 +519,12 @@ mod tests {
         ComponentContract::builder("Button", "0.1.0")
             .disposition(Disposition::Rewrite)
             .required_prop("label", "SharedString", "Button label text")
-            .optional_prop("disabled", "bool", "false", "Whether the button is disabled")
+            .optional_prop(
+                "disabled",
+                "bool",
+                "false",
+                "Whether the button is disabled",
+            )
             .variant("primary")
             .variant("secondary")
             .variant("ghost")
@@ -589,8 +590,7 @@ mod tests {
     fn test_serialization_roundtrip() {
         let contract = sample_contract();
         let json = serde_json::to_string_pretty(&contract).expect("serialize");
-        let deserialized: ComponentContract =
-            serde_json::from_str(&json).expect("deserialize");
+        let deserialized: ComponentContract = serde_json::from_str(&json).expect("deserialize");
 
         assert_eq!(deserialized.name, contract.name);
         assert_eq!(deserialized.version, contract.version);
@@ -657,9 +657,7 @@ mod tests {
             .state(ComponentState::Active)
             .build();
         let errors = contract.validate();
-        assert!(errors
-            .iter()
-            .any(|e| e.field == "props[0].default_value"));
+        assert!(errors.iter().any(|e| e.field == "props[0].default_value"));
     }
 
     #[test]
@@ -669,9 +667,11 @@ mod tests {
             .state(ComponentState::Disabled)
             .build();
         let errors = contract.validate();
-        assert!(errors
-            .iter()
-            .any(|e| e.field == "interaction_checklist.disabled_behavior"));
+        assert!(
+            errors
+                .iter()
+                .any(|e| e.field == "interaction_checklist.disabled_behavior")
+        );
     }
 
     #[test]
@@ -681,9 +681,11 @@ mod tests {
             .state(ComponentState::Readonly)
             .build();
         let errors = contract.validate();
-        assert!(errors
-            .iter()
-            .any(|e| e.field == "interaction_checklist.readonly_behavior"));
+        assert!(
+            errors
+                .iter()
+                .any(|e| e.field == "interaction_checklist.readonly_behavior")
+        );
     }
 
     #[test]
@@ -693,9 +695,11 @@ mod tests {
             .state(ComponentState::Focused)
             .build();
         let errors = contract.validate();
-        assert!(errors
-            .iter()
-            .any(|e| e.field == "interaction_checklist.focus_behavior"));
+        assert!(
+            errors
+                .iter()
+                .any(|e| e.field == "interaction_checklist.focus_behavior")
+        );
     }
 
     #[test]
@@ -705,9 +709,11 @@ mod tests {
             .state(ComponentState::Hover)
             .build();
         let errors = contract.validate();
-        assert!(errors
-            .iter()
-            .any(|e| e.field == "interaction_checklist.pointer_behavior"));
+        assert!(
+            errors
+                .iter()
+                .any(|e| e.field == "interaction_checklist.pointer_behavior")
+        );
     }
 
     #[test]

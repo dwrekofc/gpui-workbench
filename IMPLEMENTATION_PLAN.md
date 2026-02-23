@@ -2,8 +2,8 @@
 
 **Current state**: Workspace scaffold complete. Cargo workspace with full directory structure and crate stubs exists. Governance scaffolding complete. Ready to begin Wave 2 (P0.5-03 design tokens + P0.5-05 primitives).
 
-**Active phase**: Phase 0.5 -- Wave 5. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-04 DONE. P0.5-05 DONE. P0.5-06 DONE. Next: P0.5-07 (POC components -- Dialog, Select, Tabs, needs 03+04+05+06).
-**Phase 0.5 gate status**: NOT MET -- Waves 1-4 complete, Wave 5 (POC components) not started.
+**Active phase**: Phase 0.5 -- Wave 5. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-04 DONE. P0.5-05 DONE. P0.5-06 DONE. P0.5-07 DONE. Next: P0.5-08 (Story framework, needs 07).
+**Phase 0.5 gate status**: NOT MET -- Waves 1-5 complete, Wave 6 (Story framework + Registry) not started.
 **Last updated**: 2026-02-22
 **P0.5-01 completed**: 2026-02-22
 **P0.5-02 completed**: 2026-02-22
@@ -11,6 +11,7 @@
 **P0.5-05 completed**: 2026-02-22
 **P0.5-04 completed**: 2026-02-22
 **P0.5-06 completed**: 2026-02-22
+**P0.5-07 completed**: 2026-02-22
 **Plan validated**: 2026-02-22 -- All specs read, codebase confirmed greenfield, dependency graph verified correct.
 **Re-validated**: 2026-02-22 -- All 17 specs re-read and cross-referenced. 10 gaps identified and addressed below.
 **Re-validated**: 2026-02-22 -- Deep spec analysis with parallel subagents. 8 additional forward-planning gaps identified (see Reconciliation §2).
@@ -264,7 +265,7 @@ All items must complete and gate criteria must be met before any Phase 1 work be
 
 ### P0.5-07: POC components -- Dialog, Select, Tabs
 
-- **Status**: NOT STARTED
+- **Status**: COMPLETE
 - **Spec**: `specs/phase-0.5/poc-components.md`
 - **Adoption disposition**: ALL THREE are **Fork** -- adapt from reference implementations, normalize to internal contracts/tokens.
 - **What**: Implement three styled POC components that validate the entire stack end-to-end: tokens, primitives, contracts, stories, workbench, registry, and CLI.
@@ -333,6 +334,14 @@ All items must complete and gate criteria must be met before any Phase 1 work be
   - `.refs/zed_gpui_refs/gpui-component-main/crates/ui/src/tab/tab.rs` -- gpui-component tab
   - `.refs/zed_gpui_refs/gpui-component-main/crates/ui/src/tab/tab_bar.rs` -- gpui-component tab bar
 - **Dependencies**: P0.5-03 (tokens), P0.5-04 (theme engine), P0.5-05 (primitives), P0.5-06 (contracts schema)
+- **Implementation discoveries** (captured 2026-02-22 during P0.5-07 execution):
+  - **Stack overflow in test compilation**: GPUI's `#[derive(IntoElement)]` proc macro causes deep type recursion that overflows the compiler stack when test harness expands `#[test]` in the same crate. Solution: moved component contract/navigation tests to `tests/contract_tests.rs` (integration test file). Set `#![recursion_limit = "2048"]` in lib.rs.
+  - **`v_flex()` and `h_flex()` not in GPUI**: These convenience functions exist in gpui-component but not in raw GPUI at rev d08d98f. Use `div().flex().flex_col()` and `div().flex().flex_row()` instead.
+  - **`overflow_y_scroll()` not in GPUI**: Use `.overflow_hidden()` at this revision.
+  - **`z_index()` not in GPUI**: Not available at this revision. Use `deferred().with_priority()` for overlay stacking.
+  - **`FluentBuilder` trait must be imported**: The `.when()` method requires `use gpui::prelude::FluentBuilder`.
+  - **All three POC components use RenderOnce**: Per plan guidance, Dialog/Tabs are single-struct RenderOnce; Select could benefit from Entity+wrapper pattern in Phase 1 for persistent state.
+  - **Components are stateless (RenderOnce)**: State management delegated to parent via on_change callbacks. Full stateful (Entity-based) variants deferred to Phase 1 integration with workbench.
 - **Gate evidence**: All 3 styled, pass acceptance checklist, map to frozen tokens, provenance complete, `cargo test` passes, performance evidence collected.
 
 ---
