@@ -12,6 +12,16 @@ A frozen set of design tokens extracted from Zed One Dark and One Light themes t
 - Support semantic token categories: foreground, background, border, surface, accent, state (hover, active, focused, disabled, error)
 - Provide a mapping table from Zed theme JSON keys to internal token identifiers
 - Token values must be resolvable at runtime for theme switching
+- Provide `parse_hex_color()` to convert `#RRGGBB`/`#RRGGBBAA` strings to GPUI color types [observed from code]
+- Provide `set_token_by_path()` to mutate individual tokens at runtime by dot-path [observed from code]
+- Provide `all_token_paths()` listing all ~50 addressable token dot-paths [observed from code]
+- Provide `TOKEN_MAPPING` static table mapping internal dot-paths to Zed JSON keys [observed from code]
+- Support theme import/export in JSON format (FR-009) [observed from code]
+- Support theme import/export in TOML format (FR-009) [observed from code]
+- Store `Theme` and `ThemeRegistry` as GPUI globals [observed from code]
+- Provide `ActiveTheme` extension trait on `gpui::App` for `.theme()` access [observed from code]
+- Provide `Theme::change(name, cx)` to switch active theme by name with window refresh [observed from code]
+- Token structs include: `BorderTokens`, `SurfaceTokens`, `ElementTokens`, `GhostElementTokens`, `TextTokens`, `IconTokens`, `StatusTokens`, `TabTokens`, `PanelTokens`, `ChromeTokens`, `ScrollbarTokens`, `PlayerTokens`, `LinkTokens` [observed from code]
 
 ## Constraints
 - Lives in `crates/theme/`

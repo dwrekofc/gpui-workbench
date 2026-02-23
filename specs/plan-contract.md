@@ -10,14 +10,22 @@ The canonical JSON schema for `plan` and `apply` payloads that enables determini
   - Ordered list of file mutations, each with: action (create, modify, delete), file path, mutation strategy (e.g., append_export, insert_use, replace_section)
   - Conflict detection results (list of conflicts, empty if none)
   - Provenance actions (files requiring attribution metadata)
+  - File checksums (FNV-1a) for deterministic verification [observed from code]
+  - Target layout identifier [observed from code]
+  - Optional content field per mutation [observed from code]
+  - Optional description field per mutation [observed from code]
 - Plan output must contain enough detail for an agent to reconstruct the resulting file tree from JSON alone (FR-016, AC-010)
 - Plan generation for a single component install should complete in sub-second to low-second range (NFR-003)
 - Identical inputs (component, version, target layout) shall yield identical plans (NFR-001)
 - Apply failures shall be recoverable with a clear post-failure state report (NFR-002)
+- Provide an `ApplyFailureReport` struct capturing which mutation failed, which completed, and which remain [observed from code]
 - Support the default target app layout (feature-first vertical slice):
   - Component source under `src/shared/ui/<component>/`
   - Export updates to `src/shared/ui/mod.rs`
   - Token injection into shared theme token files
+- Provide `scan_existing_files()` to detect files already present in the target directory for conflict detection [observed from code]
+- Define `TemplateAdapter` trait with methods: `component_dir()`, `module_file()`, `export_line()`, `theme_tokens_file()` [observed from code]
+- Provide `DefaultLayout` as the concrete `TemplateAdapter` implementation [observed from code]
 
 ## Constraints
 - Schema defined in `crates/registry/` or a dedicated contract module

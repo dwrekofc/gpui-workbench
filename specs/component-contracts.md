@@ -13,6 +13,10 @@ The metadata schema and acceptance checklist that every installable component mu
   - Interaction checklist hooks (focus, keyboard, pointer, state model, disabled/readonly)
   - Performance evidence links
   - Required files list
+  - Disposition (Reuse/Fork/Rewrite)
+- Provide a `ContractBuilder` with fluent API for constructing contracts [observed from code]
+- Provide `ComponentContract::validate()` that checks: name/version non-empty, at least one prop/state, no required prop with default, interaction checklist completeness for stateful components [observed from code]
+- Every component provides a static `contract()` method returning its `ComponentContract` [observed from code]
 - Enforce builder-pattern composition for component APIs
 - Require shared identifiers on all components: `id`, `tooltip`, optional `metadata` map
 - Require explicit controlled vs uncontrolled state behavior documentation for stateful components (FR-017)

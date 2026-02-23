@@ -13,6 +13,12 @@ Provenance tracking, architectural decision records, and quality gate enforcemen
 - Require contract/docs updates when interfaces change
 - Enforce WIP limit of max 2 active vertical slices at once
 - Perform weekly risk review updates in `.planning/`
+- Require an ADR for every major architecture decision
+- No phase progression without passing phase exit criteria (NFR-005)
+- Every phase must be executable in small vertical slices of 1-3 day units (NFR-004)
+- Record gate evidence (test output, perf measurements, checklist results) per phase
+- CLI shall write `.provenance.json` files beside installed component files [observed from code]
+- Provenance check script exists at `scripts/check-provenance.sh` [observed from code]
 
 ## Constraints
 - Lives in `docs/` (PROVENANCE.md, ADR/, CONTRACTS.md, ARCHITECTURE.md)
