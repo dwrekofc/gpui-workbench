@@ -3,7 +3,7 @@
 **Current state**: Workspace scaffold complete. Cargo workspace with full directory structure and crate stubs exists. Governance scaffolding complete. Ready to begin Wave 2 (P0.5-03 design tokens + P0.5-05 primitives).
 
 **Active phase**: Phase 0.5 -- COMPLETE. All 12 items done (P0.5-01 through P0.5-12). Phase 0.5 gate evaluation needed.
-**Phase 0.5 gate status**: READY FOR EVALUATION -- All 12 items complete.
+**Phase 0.5 gate status**: PASSED (2026-02-22) -- All 12 items complete. All 11 gate criteria verified.
 **P0.5-12 completed**: 2026-02-22
 **P0.5-11 completed**: 2026-02-22
 **P0.5-10 completed**: 2026-02-22
@@ -500,24 +500,24 @@ All items must complete and gate criteria must be met before any Phase 1 work be
 
 All of the following must be true before Phase 1 work begins (from `specs/delivery-gates.md`):
 
-- [ ] Design tokens frozen in Rust from Zed One Dark/One Light
-- [ ] Primitives for focus, keyboard, popover, state exist and used by POC components
-- [ ] Component contracts schema defined and validated against 3 POC components
-- [ ] Dialog, Select, Tabs styled, pass acceptance checklist, map to frozen tokens
-- [ ] Theme engine loads, switches, supports live token editing
-- [ ] Story framework renders all 3 POC components with state matrix
-- [ ] Workbench app launches on macOS, displays all 3 POC components
-- [ ] Registry indexes all 3 POC components from source metadata
-- [ ] CLI add/plan/apply work for all 3 POC components
-- [ ] Plan contract JSON schema defined, deterministic output
-- [ ] Governance scaffolding in place (PROVENANCE.md, ADR template, provenance metadata)
+- [x] Design tokens frozen in Rust from Zed One Dark/One Light
+- [x] Primitives for focus, keyboard, popover, state exist and used by POC components
+- [x] Component contracts schema defined and validated against 3 POC components
+- [x] Dialog, Select, Tabs styled, pass acceptance checklist, map to frozen tokens
+- [x] Theme engine loads, switches, supports live token editing
+- [x] Story framework renders all 3 POC components with state matrix
+- [x] Workbench app launches on macOS, displays all 3 POC components
+- [x] Registry indexes all 3 POC components from source metadata
+- [x] CLI add/plan/apply work for all 3 POC components
+- [x] Plan contract JSON schema defined, deterministic output
+- [x] Governance scaffolding in place (PROVENANCE.md, ADR template, provenance metadata)
 
 ---
 
-## Phase 1: Full Core-12 (BLOCKED -- Phase 0.5 gate not met)
+## Phase 1: Full Core-12 (ACTIVE -- Phase 0.5 gate passed 2026-02-22)
 
 ### P1-01: Core-9 components
-- **Status**: BLOCKED
+- **Status**: IN PROGRESS
 - **Spec**: `specs/phase-1/core-9-components.md`
 - **What**: Button, Input, Textarea, Checkbox, Radio, Tooltip, DropdownMenu, Popover, Toast. All Fork disposition except Tooltip (Reuse with token map).
 - **Notable spec requirements**:

@@ -21,7 +21,10 @@ use gpui::*;
 
 // Re-export for convenience.
 pub use matrix::StateMatrix;
-pub use stories::{DialogStory, SelectStory, TabsStory};
+pub use stories::{
+    ButtonStory, CheckboxStory, DialogStory, DropdownMenuStory, InputStory, PopoverStory,
+    RadioStory, SelectStory, TabsStory, TextareaStory, ToastStory, TooltipStory,
+};
 
 // ---------------------------------------------------------------------------
 // Story trait
@@ -169,10 +172,19 @@ impl Default for StoryRegistry {
 pub fn init(cx: &mut App) {
     let mut registry = StoryRegistry::new();
 
-    // Register all built-in POC stories.
+    // Register all built-in stories (alphabetical order).
+    registry.register(ButtonStory);
+    registry.register(CheckboxStory);
     registry.register(DialogStory);
+    registry.register(DropdownMenuStory);
+    registry.register(InputStory);
+    registry.register(PopoverStory);
+    registry.register(RadioStory);
     registry.register(SelectStory);
     registry.register(TabsStory);
+    registry.register(TextareaStory);
+    registry.register(ToastStory);
+    registry.register(TooltipStory);
 
     cx.set_global(registry);
 }

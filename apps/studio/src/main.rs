@@ -813,11 +813,23 @@ impl Render for StudioApp {
 /// This avoids the borrow conflict that would occur if we held a reference to
 /// the `StoryRegistry` global while also passing `&mut App` to `render_story`.
 fn render_story_by_index(idx: usize, window: &mut Window, cx: &mut App) -> Option<AnyElement> {
-    use story::{DialogStory, SelectStory, Story, TabsStory};
+    use story::{
+        ButtonStory, CheckboxStory, DialogStory, DropdownMenuStory, InputStory, PopoverStory,
+        RadioStory, SelectStory, Story, TabsStory, TextareaStory, ToastStory, TooltipStory,
+    };
     match idx {
-        0 => Some(DialogStory.render_story(window, cx)),
-        1 => Some(SelectStory.render_story(window, cx)),
-        2 => Some(TabsStory.render_story(window, cx)),
+        0 => Some(ButtonStory.render_story(window, cx)),
+        1 => Some(CheckboxStory.render_story(window, cx)),
+        2 => Some(DialogStory.render_story(window, cx)),
+        3 => Some(DropdownMenuStory.render_story(window, cx)),
+        4 => Some(InputStory.render_story(window, cx)),
+        5 => Some(PopoverStory.render_story(window, cx)),
+        6 => Some(RadioStory.render_story(window, cx)),
+        7 => Some(SelectStory.render_story(window, cx)),
+        8 => Some(TabsStory.render_story(window, cx)),
+        9 => Some(TextareaStory.render_story(window, cx)),
+        10 => Some(ToastStory.render_story(window, cx)),
+        11 => Some(TooltipStory.render_story(window, cx)),
         _ => None,
     }
 }

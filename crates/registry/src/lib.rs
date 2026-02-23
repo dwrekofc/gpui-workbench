@@ -172,13 +172,29 @@ impl RegistryIndex {
 /// (via the static `contract()` methods on each component type), ensuring
 /// the registry is always in sync with the actual component implementations.
 pub fn generate_registry() -> RegistryIndex {
-    use components::{Dialog, Select, Tabs};
-
     let mut index = RegistryIndex::new();
-    index.register(&Dialog::contract());
-    index.register(&Select::contract());
-    index.register(&Tabs::contract());
+    for contract in all_contracts() {
+        index.register(&contract);
+    }
     index
+}
+
+/// Returns all component contracts in alphabetical order.
+fn all_contracts() -> Vec<components::ComponentContract> {
+    vec![
+        components::Button::contract(),
+        components::Checkbox::contract(),
+        components::Dialog::contract(),
+        components::DropdownMenu::contract(),
+        components::Input::contract(),
+        components::Popover::contract(),
+        components::Radio::contract(),
+        components::Select::contract(),
+        components::Tabs::contract(),
+        components::Textarea::contract(),
+        components::Toast::contract(),
+        components::Tooltip::contract(),
+    ]
 }
 
 /// Initialize the registry, validating all component contracts.
@@ -187,9 +203,7 @@ pub fn generate_registry() -> RegistryIndex {
 /// only indexes well-formed components.
 pub fn generate_registry_validated()
 -> Result<RegistryIndex, Vec<(String, Vec<components::ValidationError>)>> {
-    use components::{Dialog, Select, Tabs};
-
-    let contracts = vec![Dialog::contract(), Select::contract(), Tabs::contract()];
+    let contracts = all_contracts();
 
     let mut validation_errors = Vec::new();
     for contract in &contracts {
@@ -373,10 +387,19 @@ mod tests {
     fn generate_registry_indexes_all_poc_components() {
         let index = generate_registry();
 
-        assert_eq!(index.len(), 3);
+        assert_eq!(index.len(), 12);
+        assert!(index.get("Button").is_some());
+        assert!(index.get("Checkbox").is_some());
         assert!(index.get("Dialog").is_some());
+        assert!(index.get("DropdownMenu").is_some());
+        assert!(index.get("Input").is_some());
+        assert!(index.get("Popover").is_some());
+        assert!(index.get("Radio").is_some());
         assert!(index.get("Select").is_some());
         assert!(index.get("Tabs").is_some());
+        assert!(index.get("Textarea").is_some());
+        assert!(index.get("Toast").is_some());
+        assert!(index.get("Tooltip").is_some());
     }
 
     #[test]
@@ -385,7 +408,7 @@ mod tests {
         assert!(result.is_ok(), "Validation failed: {:?}", result.err());
 
         let index = result.unwrap();
-        assert_eq!(index.len(), 3);
+        assert_eq!(index.len(), 12);
     }
 
     #[test]
