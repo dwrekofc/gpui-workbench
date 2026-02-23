@@ -2,8 +2,9 @@
 
 **Current state**: Workspace scaffold complete. Cargo workspace with full directory structure and crate stubs exists. Governance scaffolding complete. Ready to begin Wave 2 (P0.5-03 design tokens + P0.5-05 primitives).
 
-**Active phase**: Phase 0.5 -- Wave 8. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-04 DONE. P0.5-05 DONE. P0.5-06 DONE. P0.5-07 DONE. P0.5-08 DONE. P0.5-09 DONE. P0.5-10 DONE. Next: P0.5-11 (CLI) and P0.5-12 (Workbench app).
-**Phase 0.5 gate status**: NOT MET -- Waves 1-8 complete (P0.5-10 done). P0.5-11 (CLI) unblocked. P0.5-12 (Workbench app) can start in parallel.
+**Active phase**: Phase 0.5 -- Wave 9. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-04 DONE. P0.5-05 DONE. P0.5-06 DONE. P0.5-07 DONE. P0.5-08 DONE. P0.5-09 DONE. P0.5-10 DONE. P0.5-11 DONE. Next: P0.5-12 (Workbench app) -- final item before Phase 0.5 gate.
+**Phase 0.5 gate status**: NOT MET -- Waves 1-9 complete (P0.5-11 done). Only P0.5-12 (Workbench app) remains.
+**P0.5-11 completed**: 2026-02-22
 **P0.5-10 completed**: 2026-02-22
 **Last updated**: 2026-02-22
 **P0.5-09 completed**: 2026-02-22
@@ -435,7 +436,7 @@ All items must complete and gate criteria must be met before any Phase 1 work be
 
 ### P0.5-11: CLI -- `add`, `plan`, `apply` commands
 
-- **Status**: NOT STARTED
+- **Status**: COMPLETE
 - **Spec**: `specs/phase-0.5/cli.md`
 - **What**: Build the `gpui` CLI binary with three commands for component installation and plan management.
 - **Sub-tasks**:
