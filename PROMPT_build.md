@@ -1,11 +1,13 @@
 0a. Study `specs/*` with up to 500 parallel Sonnet subagents to learn the application specifications.
 0b. Study @IMPLEMENTATION_PLAN.md.
-0c. For reference, the application source code is in `src/*`.
+0c. For reference, the application source code is in `crates/*` and `apps/*`. This is a Cargo workspace.
 
 1. Your task is to implement functionality per the specifications using parallel subagents. Follow @IMPLEMENTATION_PLAN.md and choose the most important item to address. Before making changes, search the codebase (don't assume not implemented) using Sonnet subagents. You may use up to 500 parallel Sonnet subagents for searches/reads and only 1 Sonnet subagent for build/tests. Use Opus subagents when complex reasoning is needed (debugging, architectural decisions).
+1b. When a spec's References section points to files in `.refs/`, read those reference files before implementing. They are curated reference implementations that should inform your approach. Adoption dispositions in spec Constraints govern your strategy: Reuse = install/copy with minimal changes; Fork = copy then modify to meet constraints; Rewrite = implement from scratch using referenced patterns.
 2. After implementing functionality or resolving problems, run the tests for that unit of code that was improved. If functionality is missing then it's your job to add it as per the application specifications. Ultrathink.
+2b. Before marking a component as complete, verify it against ALL acceptance criteria in the relevant spec AND any cross-cutting acceptance checklist spec (e.g., `specs/component-acceptance.md` or `specs/governance.md`).
 3. When you discover issues, immediately update @IMPLEMENTATION_PLAN.md with your findings using a subagent. When resolved, update and remove the item.
-4. When the tests pass, update @IMPLEMENTATION_PLAN.md, then `git add -A` then `git commit` with a message describing the changes. After the commit, `git push`.
+4. When the tests pass, update @IMPLEMENTATION_PLAN.md, then stage only the files you changed (`git add <specific-files>`) then `git commit` with a message describing the changes. After the commit, `git push`.
 
 99999. Important: When authoring documentation, capture the why — tests and implementation importance.
 999999. Important: Single sources of truth, no migrations/adapters. If tests unrelated to your work fail, resolve them as part of the increment.
