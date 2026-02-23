@@ -125,13 +125,6 @@ Total: X specs, Y requirements, Z acceptance criteria
 Next step: ./loop.sh plan
 ```
 
-## Input Locations
-
-Read planning/ideation documents from these locations:
-- `.planning/**/*.md`
-- `docs/**/*.md`
-- Any `*plan*`, `*roadmap*`, `*architecture*`, `*decisions*`, `*spec*` files in the project
-
 ## Important
 
 - PHASE 1 output is a SHORT draft for quick human review. Do NOT write full specs in Phase 1.

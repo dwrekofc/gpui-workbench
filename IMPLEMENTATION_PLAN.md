@@ -569,7 +569,7 @@ All of the following must be true before Phase 1 work begins (from `specs/delive
 - **Notable spec requirements**:
   - Table: virtualized rendering, 10,000+ rows without frame budget regression, column sort, row selection (single/multi). Must use GPUI `uniform_list` or equivalent (de-risked by P0.5-05 spike).
   - Tree: virtualized rendering, 10,000+ nodes without regression, expand/collapse, drag-and-drop reordering. Drag-and-drop may require a new primitive if shared by other components.
-  - Command Palette: Rewrite (Zed impl too app-specific), fuzzy search 1,000+ commands with sub-frame latency. Requires a decoupled `CommandRegistry` designed independently from Zed's editor-specific system (Reconciliation Round 2, item 4).
+  - Command Palette: Rewrite (Zed impl too app-specific), fuzzy search 1,000+ commands with sub-frame latency. `CommandRegistry` trait will live in a new `crates/commands/` crate (decided 2026-02-23), designed independently from Zed's editor-specific system.
 
 ### P2-03: Distribution
 - **Status**: BLOCKED
@@ -578,10 +578,10 @@ All of the following must be true before Phase 1 work begins (from `specs/delive
 - **Notable spec requirements**:
   - Documentation polish: README, getting started guide, component API docs
   - Theme import/export hardened for production (round-trip fidelity)
-  - Local visual snapshot baseline and diff checks (non-cloud). Requires visual snapshot tooling selection before Phase 2 delivery begins (Reconciliation Round 2, item 5).
-  - Pilot adoption: at least one external app uses 3+ installed components. Pilot identification must begin during Phase 1 (Reconciliation Round 2, item 7).
+  - Local visual snapshot baseline and diff checks (non-cloud). Approach decided (2026-02-23): automated pixel diffing via GPUI render-to-image + pixel-diff library.
+  - Pilot adoption: dedicated demo app at `apps/demo/` uses 3+ installed components (decided 2026-02-23). Scaffold during Phase 1, wire components during Phase 2.
   - `gpui init` expanded to support multiple templates (depends on `TemplateAdapter` extensibility from P1-03)
-  - Homebrew formula triggered by maturity criteria defined in P1-03 (Reconciliation Round 2, item 6)
+  - Homebrew formula triggered by strict maturity criteria (decided 2026-02-23): clean `cargo install`, all Core-12 installable, no panics, docs exist, all tests pass
 
 ---
 
@@ -612,13 +612,13 @@ Deep spec analysis with parallel subagents identified 8 items that need earlier 
 
 3. **NEEDS EVALUATION in P0.5-05 or P1-02**: GPUI's `uniform_list` virtualization primitive must be evaluated during Phase 0.5 or early Phase 1. Phase 2 priority components (Table, Tree) are hard-gated on `uniform_list` working for their interaction models (priority-components.md line 45). Add a sub-task to P0.5-05 or create a spike task: build a minimal virtualized list using `uniform_list` and verify it supports keyboard navigation, selection, and 10K+ item rendering within frame budget.
 
-4. **NEEDS DESIGN in P2-02**: Command Palette requires a decoupled command registration API. This is the only Rewrite-disposition component. The registration system (priority-components.md line 26) must be designed independently from Zed's editor-specific command system. Plan a `CommandRegistry` trait in `crates/primitives/` or a new `crates/commands/` crate during Phase 2 design.
+4. **DECIDED (2026-02-23)**: Command Palette `CommandRegistry` will live in a new `crates/commands/` crate. Clean separation -- primitives stays focused on UI behaviors, command registration is an app-level concern. The registration system (priority-components.md line 26) must be designed independently from Zed's editor-specific command system.
 
-5. **NEEDS DECISION before P2-03**: Visual snapshot tooling selection. `distribution.md` line 13 requires "local visual snapshot baseline and diff checks" but names no specific tool. Decide on approach (e.g., GPUI screenshot API + pixel-diff library, or manual golden-file approach) before Phase 2 component delivery begins. Add to Phase 1 or early Phase 2 planning.
+5. **DECIDED (2026-02-23)**: Visual snapshot tooling will use automated pixel diffing -- GPUI renders components to image buffers, saves golden reference files, and a pixel-diff library flags visual regressions automatically. Tooling setup to be done in early Phase 2 before component delivery begins.
 
-6. **NEEDS DEFINITION before P2-03**: Homebrew maturity criteria. `distribution.md` line 9 says "after Cargo path reaches maturity criteria" but those criteria are undefined. Define in P1-03 or P0.5-02 governance docs: e.g., "Cargo install works in clean environment, all Core-12 installable, no known install-time panics."
+6. **DECIDED (2026-02-23)**: Homebrew maturity criteria (strict checklist): (a) `cargo install gpui-cli` works on a clean Mac with no prior setup, (b) all Core-12 components installable via `gpui add` without errors, (c) no known install-time panics, (d) README and getting-started documentation exist, (e) all tests pass. Formula creation blocked until all criteria met.
 
-7. **NEEDS COORDINATION in P1**: Pilot app identification for Phase 2 gate. `distribution.md` AC-5 requires "at least one external app successfully installs and uses 3+ components." This can't start cold at Phase 2. Identify candidate pilot during Phase 1 work.
+7. **DECIDED (2026-02-23)**: Pilot app will be a dedicated demo app built in-repo at `apps/demo/`. Purpose-built to exercise 3+ installed components as an external consumer would. Fully in our control, no external coordination needed. Scaffold during Phase 1, wire components during Phase 2.
 
 8. **NEEDS DESIGN in P0.5-11**: CLI JSON output schema consistency. All CLI commands across Phase 0.5 and Phase 1 must produce consistent JSON schemas (FR-003). Define a shared `CliOutput<T>` envelope type (with `success: bool`, `data: T`, `errors: Vec<CliError>`) in P0.5-11 and mandate its use in P1-03 hardening commands. Prevents schema drift between `add --json`, `list --json`, `doctor --json`.
 
@@ -653,7 +653,7 @@ Complete audit with 4 parallel research agents: specs analysis, codebase explora
 
 2. **ADDRESSED in P0.5-08 (new sub-task 10 already covers this)**: FR-007 requires "every CLI-installable component has a story." Plan sub-task 10 states "adding a new story requires only implementing the trait (no manual wiring beyond registration)" -- this validates the pattern but does not enforce it. Implementation should include a test or check that validates all registry entries have corresponding story implementations. Deferred to implementation time.
 
-3. **NOTED on P0.5-10**: `PlanContract` struct crate location not specified. Recommendation: house in `crates/registry/` alongside `RegistryIndex` and `ComponentContract`, since plan generation consumes registry metadata. Alternatively, a `crates/plan/` crate could be created, but adds workspace complexity for a single type. Decision deferred to P0.5-10 implementation.
+3. **RESOLVED**: `PlanContract` struct lives in `crates/registry/src/plan.rs` alongside `RegistryIndex` and `ComponentContract`, since plan generation consumes registry metadata.
 
 4. **ADDRESSED in P0.5-02**: Provenance check script (sub-task 7) should validate both `PROVENANCE.md` index entries AND inline provenance metadata on adapted source files (governance spec AC-003: "every adapted source file has provenance metadata"). Script scope clarified to include both checks.
 
