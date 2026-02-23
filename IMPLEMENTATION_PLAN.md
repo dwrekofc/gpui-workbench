@@ -517,7 +517,8 @@ All of the following must be true before Phase 1 work begins (from `specs/delive
 ## Phase 1: Full Core-12 (ACTIVE -- Phase 0.5 gate passed 2026-02-22)
 
 ### P1-01: Core-9 components
-- **Status**: IN PROGRESS
+- **Status**: COMPLETE
+- **Completed**: 2026-02-22
 - **Spec**: `specs/phase-1/core-9-components.md`
 - **What**: Button, Input, Textarea, Checkbox, Radio, Tooltip, DropdownMenu, Popover, Toast. All Fork disposition except Tooltip (Reuse with token map).
 - **Notable spec requirements**:
