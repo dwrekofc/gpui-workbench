@@ -253,7 +253,13 @@ impl StudioApp {
         );
 
         // Story entries
-        let mut story_list = div().flex().flex_col().py_1().overflow_y_hidden();
+        let mut story_list = div()
+            .id("story-list")
+            .flex()
+            .flex_col()
+            .py_1()
+            .flex_1()
+            .overflow_y_scroll();
 
         for (idx, entry) in registry.entries().iter().enumerate() {
             let is_selected = self.selected_story_index == Some(idx);
@@ -398,7 +404,14 @@ impl StudioApp {
                 let story_element = render_story_by_index(idx, window, cx);
                 if let Some(element) = story_element {
                     content =
-                        content.child(div().flex_1().overflow_y_hidden().p_4().child(element));
+                        content.child(
+                            div()
+                                .id("story-content")
+                                .flex_1()
+                                .overflow_y_scroll()
+                                .p_4()
+                                .child(element),
+                        );
                 }
             }
         } else {
@@ -453,7 +466,13 @@ impl StudioApp {
         );
 
         // Token list
-        let mut token_list = div().flex().flex_col().py_1().overflow_y_hidden();
+        let mut token_list = div()
+            .id("token-list")
+            .flex()
+            .flex_col()
+            .py_1()
+            .flex_1()
+            .overflow_y_scroll();
 
         // Group tokens by category (first segment before '.')
         let mut current_category = "";
@@ -624,7 +643,7 @@ impl StudioApp {
     }
 
     /// Render the component metadata panel (below content or in a sidebar).
-    fn render_metadata_panel(&self, cx: &Context<Self>) -> Div {
+    fn render_metadata_panel(&self, cx: &Context<Self>) -> Stateful<Div> {
         let theme = cx.theme();
         let registry = cx.global::<StoryRegistry>();
 
@@ -632,8 +651,9 @@ impl StudioApp {
             .flex()
             .flex_col()
             .w_full()
+            .id("metadata-panel")
             .max_h(px(300.0))
-            .overflow_y_hidden()
+            .overflow_y_scroll()
             .bg(theme.panel.background)
             .border_t_1()
             .border_color(theme.border.default);
