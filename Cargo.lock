@@ -950,6 +950,7 @@ dependencies = [
  "gpui",
  "primitives",
  "serde",
+ "serde_json",
  "smallvec",
  "theme",
 ]

@@ -2,13 +2,15 @@
 
 **Current state**: Workspace scaffold complete. Cargo workspace with full directory structure and crate stubs exists. Governance scaffolding complete. Ready to begin Wave 2 (P0.5-03 design tokens + P0.5-05 primitives).
 
-**Active phase**: Phase 0.5 -- Wave 3+4. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-05 DONE. Next: P0.5-04 (theme engine, needs 03) + P0.5-06 (contracts, needs 03+05) in parallel.
-**Phase 0.5 gate status**: NOT MET -- Wave 2 complete, Wave 3/4 not started.
+**Active phase**: Phase 0.5 -- Wave 5. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-04 DONE. P0.5-05 DONE. P0.5-06 DONE. Next: P0.5-07 (POC components -- Dialog, Select, Tabs, needs 03+04+05+06).
+**Phase 0.5 gate status**: NOT MET -- Waves 1-4 complete, Wave 5 (POC components) not started.
 **Last updated**: 2026-02-22
 **P0.5-01 completed**: 2026-02-22
 **P0.5-02 completed**: 2026-02-22
 **P0.5-03 completed**: 2026-02-22
 **P0.5-05 completed**: 2026-02-22
+**P0.5-04 completed**: 2026-02-22
+**P0.5-06 completed**: 2026-02-22
 **Plan validated**: 2026-02-22 -- All specs read, codebase confirmed greenfield, dependency graph verified correct.
 **Re-validated**: 2026-02-22 -- All 17 specs re-read and cross-referenced. 10 gaps identified and addressed below.
 **Re-validated**: 2026-02-22 -- Deep spec analysis with parallel subagents. 8 additional forward-planning gaps identified (see Reconciliation §2).
@@ -153,7 +155,7 @@ All items must complete and gate criteria must be met before any Phase 1 work be
 
 ### P0.5-04: Theme engine -- load, switch, live edit
 
-- **Status**: NOT STARTED
+- **Status**: COMPLETE
 - **Spec**: `specs/phase-0.5/theme-engine.md`
 - **What**: Build the runtime theme engine that loads theme files, switches themes, supports live token editing, and provides a theme context for component token resolution.
 - **Sub-tasks**:
@@ -228,7 +230,7 @@ All items must complete and gate criteria must be met before any Phase 1 work be
 
 ### P0.5-06: Component contracts schema
 
-- **Status**: NOT STARTED
+- **Status**: COMPLETE
 - **Spec**: `specs/component-contracts.md`
 - **What**: Define the `ComponentContract` metadata schema -- the structured description of a component's props, states, tokens, interaction checklist, performance evidence, and required files.
 - **Sub-tasks**:
