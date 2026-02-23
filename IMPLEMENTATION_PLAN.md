@@ -2,8 +2,8 @@
 
 **Current state**: Workspace scaffold complete. Cargo workspace with full directory structure and crate stubs exists. Governance scaffolding complete. Ready to begin Wave 2 (P0.5-03 design tokens + P0.5-05 primitives).
 
-**Active phase**: Phase 0.5 -- Wave 5. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-04 DONE. P0.5-05 DONE. P0.5-06 DONE. P0.5-07 DONE. Next: P0.5-08 (Story framework, needs 07).
-**Phase 0.5 gate status**: NOT MET -- Waves 1-5 complete, Wave 6 (Story framework + Registry) not started.
+**Active phase**: Phase 0.5 -- Wave 6. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-04 DONE. P0.5-05 DONE. P0.5-06 DONE. P0.5-07 DONE. P0.5-08 DONE. Next: P0.5-09 (Registry) and P0.5-12 (Workbench app).
+**Phase 0.5 gate status**: NOT MET -- Waves 1-6 complete (P0.5-08 done). P0.5-09 (Registry) can start in parallel with P0.5-12 (Workbench app). CLI track (P0.5-10, P0.5-11) blocked on P0.5-09.
 **Last updated**: 2026-02-22
 **P0.5-01 completed**: 2026-02-22
 **P0.5-02 completed**: 2026-02-22
@@ -12,6 +12,7 @@
 **P0.5-04 completed**: 2026-02-22
 **P0.5-06 completed**: 2026-02-22
 **P0.5-07 completed**: 2026-02-22
+**P0.5-08 completed**: 2026-02-22
 **Plan validated**: 2026-02-22 -- All specs read, codebase confirmed greenfield, dependency graph verified correct.
 **Re-validated**: 2026-02-22 -- All 17 specs re-read and cross-referenced. 10 gaps identified and addressed below.
 **Re-validated**: 2026-02-22 -- Deep spec analysis with parallel subagents. 8 additional forward-planning gaps identified (see Reconciliation §2).
@@ -348,7 +349,7 @@ All items must complete and gate criteria must be met before any Phase 1 work be
 
 ### P0.5-08: Story framework
 
-- **Status**: NOT STARTED
+- **Status**: COMPLETE
 - **Spec**: `specs/phase-0.5/story-framework.md`
 - **What**: Build the trait-based story system for rendering components in the workbench with state matrix support.
 - **Sub-tasks**:
@@ -366,6 +367,10 @@ All items must complete and gate criteria must be met before any Phase 1 work be
 - **Reference files to study**:
   - `.refs/zed_gpui_refs/zed-main/crates/ui/src/components/` -- Zed component patterns (stories inline in storybook)
   - `.refs/zed_gpui_refs/gpui-component-main/crates/ui/src/` -- gpui-component structure (stories alongside components)
+- **Implementation discoveries** (captured 2026-02-22 during P0.5-08 execution):
+  - **Stack overflow in test compilation**: Same issue as P0.5-07 -- GPUI's `IntoElement` derive causes stack overflow when compiling tests that transitively depend on `components` crate. Solution: moved all story tests to `tests/story_tests.rs` (integration test file). Set `#![recursion_limit = "2048"]` in lib.rs.
+  - **GPUI element builders require `'static` lifetimes**: Borrowed `&str` references cannot be passed into GPUI element builder chains (`.child()`, etc.) because the builder requires `'static`. Solution: convert to owned `SharedString` before passing into builders. Used config struct pattern (DialogPreviewConfig) to avoid clippy's too-many-arguments lint.
+  - **Story rendering is inline (not overlay)**: Dialog stories render the dialog panel directly (without overlay backdrop) because stories display multiple dialogs simultaneously. Full overlay rendering would obscure other content.
 - **Dependencies**: P0.5-07 (POC components must exist to write stories for them)
 - **Gate evidence**: Story framework renders all 3 POC components with state matrix coverage, theme switching updates stories.
 

@@ -7,4 +7,5 @@ publish.workspace = true
 [dependencies]
 gpui.workspace = true
 components.workspace = true
+primitives.workspace = true
 theme.workspace = true
