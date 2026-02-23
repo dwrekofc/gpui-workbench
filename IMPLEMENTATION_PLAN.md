@@ -2,8 +2,9 @@
 
 **Current state**: Workspace scaffold complete. Cargo workspace with full directory structure and crate stubs exists. Governance scaffolding complete. Ready to begin Wave 2 (P0.5-03 design tokens + P0.5-05 primitives).
 
-**Active phase**: Phase 0.5 -- Wave 7. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-04 DONE. P0.5-05 DONE. P0.5-06 DONE. P0.5-07 DONE. P0.5-08 DONE. P0.5-09 DONE. Next: P0.5-10 (Plan contract), P0.5-11 (CLI), P0.5-12 (Workbench app).
-**Phase 0.5 gate status**: NOT MET -- Waves 1-7 complete (P0.5-09 done). P0.5-10 (Plan contract) unblocked. P0.5-12 (Workbench app) can start in parallel. CLI track: P0.5-10 -> P0.5-11.
+**Active phase**: Phase 0.5 -- Wave 8. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-04 DONE. P0.5-05 DONE. P0.5-06 DONE. P0.5-07 DONE. P0.5-08 DONE. P0.5-09 DONE. P0.5-10 DONE. Next: P0.5-11 (CLI) and P0.5-12 (Workbench app).
+**Phase 0.5 gate status**: NOT MET -- Waves 1-8 complete (P0.5-10 done). P0.5-11 (CLI) unblocked. P0.5-12 (Workbench app) can start in parallel.
+**P0.5-10 completed**: 2026-02-22
 **Last updated**: 2026-02-22
 **P0.5-09 completed**: 2026-02-22
 **P0.5-01 completed**: 2026-02-22
@@ -404,7 +405,7 @@ All items must complete and gate criteria must be met before any Phase 1 work be
 
 ### P0.5-10: Plan contract -- JSON schema for plan/apply
 
-- **Status**: NOT STARTED
+- **Status**: COMPLETE
 - **Spec**: `specs/plan-contract.md`
 - **What**: Define the canonical JSON schema for `plan` and `apply` payloads that enables deterministic, agent-readable file mutations.
 - **Sub-tasks**:

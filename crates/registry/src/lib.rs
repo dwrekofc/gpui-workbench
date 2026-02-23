@@ -5,6 +5,8 @@
 //! It is generated from source -- not hand-maintained manifests -- ensuring
 //! the registry is always regenerable and never stale (FR-006).
 
+pub mod plan;
+
 use std::collections::HashMap;
 
 use components::{
