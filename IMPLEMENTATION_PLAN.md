@@ -2,9 +2,10 @@
 
 **Current state**: Workspace scaffold complete. Cargo workspace with full directory structure and crate stubs exists. Governance scaffolding complete. Ready to begin Wave 2 (P0.5-03 design tokens + P0.5-05 primitives).
 
-**Active phase**: Phase 0.5 -- Wave 6. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-04 DONE. P0.5-05 DONE. P0.5-06 DONE. P0.5-07 DONE. P0.5-08 DONE. Next: P0.5-09 (Registry) and P0.5-12 (Workbench app).
-**Phase 0.5 gate status**: NOT MET -- Waves 1-6 complete (P0.5-08 done). P0.5-09 (Registry) can start in parallel with P0.5-12 (Workbench app). CLI track (P0.5-10, P0.5-11) blocked on P0.5-09.
+**Active phase**: Phase 0.5 -- Wave 7. P0.5-01 DONE. P0.5-02 DONE. P0.5-03 DONE. P0.5-04 DONE. P0.5-05 DONE. P0.5-06 DONE. P0.5-07 DONE. P0.5-08 DONE. P0.5-09 DONE. Next: P0.5-10 (Plan contract), P0.5-11 (CLI), P0.5-12 (Workbench app).
+**Phase 0.5 gate status**: NOT MET -- Waves 1-7 complete (P0.5-09 done). P0.5-10 (Plan contract) unblocked. P0.5-12 (Workbench app) can start in parallel. CLI track: P0.5-10 -> P0.5-11.
 **Last updated**: 2026-02-22
+**P0.5-09 completed**: 2026-02-22
 **P0.5-01 completed**: 2026-02-22
 **P0.5-02 completed**: 2026-02-22
 **P0.5-03 completed**: 2026-02-22
@@ -378,7 +379,7 @@ All items must complete and gate criteria must be met before any Phase 1 work be
 
 ### P0.5-09: Registry -- component index from source metadata
 
-- **Status**: NOT STARTED
+- **Status**: COMPLETE
 - **Spec**: `specs/phase-0.5/registry.md`
 - **What**: Build the local component registry that indexes components from source metadata for deterministic CLI operations.
 - **Sub-tasks**:
