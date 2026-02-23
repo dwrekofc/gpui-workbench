@@ -1,3 +1,4 @@
+<!-- description: Implement tasks from specs and plan, run tests, commit -->
 0a. Study `specs/*` with up to 500 parallel Sonnet subagents to learn the application specifications.
 
 0b. Study @IMPLEMENTATION_PLAN.md.

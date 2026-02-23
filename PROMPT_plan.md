@@ -1,3 +1,4 @@
+<!-- description: Read-only gap analysis — compare specs against code, update plan -->
 0a. Study `specs/*` with up to 250 parallel Sonnet subagents to learn the application specifications.
 0b. Study @IMPLEMENTATION_PLAN.md (if present) to understand the plan so far.
 0c. Study `crates/*` with up to 250 parallel Sonnet subagents to understand shared crates, libraries & components.

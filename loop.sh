@@ -1,27 +1,48 @@
 #!/bin/bash
-# Usage: ./loop2.sh [plan] [max_iterations]
+# Usage: ./loop.sh [mode] [max_iterations]
 # Examples:
-#   ./loop2.sh              # Build mode, unlimited iterations
-#   ./loop2.sh 20           # Build mode, max 20 iterations
-#   ./loop2.sh plan         # Plan mode, unlimited iterations
-#   ./loop2.sh plan 5       # Plan mode, max 5 iterations
+#   ./loop.sh              # Build mode, unlimited iterations
+#   ./loop.sh 20           # Build mode, max 20 iterations
+#   ./loop.sh plan         # Plan mode, unlimited iterations
+#   ./loop.sh plan 5       # Plan mode, max 5 iterations
+#   ./loop.sh audit 10     # Custom mode, max 10 iterations
+#   ./loop.sh help         # List available modes
 #
-# Like loop.sh but with readable streaming text output + raw JSON logs.
+# Any PROMPT_<name>.md file is auto-discovered as a mode.
+# Readable streaming output + raw JSON logs.
 # Requires: jq
 
 # Parse arguments
-if [ "$1" = "plan" ]; then
-    MODE="plan"
-    PROMPT_FILE="PROMPT_plan.md"
-    MAX_ITERATIONS=${2:-0}
+if [ -z "$1" ]; then
+    MODE="build"
+    PROMPT_FILE="PROMPT_build.md"
+    MAX_ITERATIONS=0
 elif [[ "$1" =~ ^[0-9]+$ ]]; then
     MODE="build"
     PROMPT_FILE="PROMPT_build.md"
     MAX_ITERATIONS=$1
+elif [ "$1" = "help" ]; then
+    echo "Usage: ./loop.sh [mode] [max_iterations]"
+    echo ""
+    echo "Available modes:"
+    for f in PROMPT_*.md; do
+        [ -f "$f" ] || continue
+        name="${f#PROMPT_}"
+        name="${name%.md}"
+        desc=$(head -1 "$f" | sed -n 's/^<!-- description: \(.*\) -->/\1/p')
+        if [ -n "$desc" ]; then
+            printf "  %-12s %s\n" "$name" "$desc"
+        else
+            printf "  %-12s\n" "$name"
+        fi
+    done
+    echo ""
+    echo "Default mode is 'build' when no mode is specified."
+    exit 0
 else
-    MODE="build"
-    PROMPT_FILE="PROMPT_build.md"
-    MAX_ITERATIONS=0
+    MODE="$1"
+    PROMPT_FILE="PROMPT_${MODE}.md"
+    MAX_ITERATIONS=${2:-0}
 fi
 
 ITERATION=0
